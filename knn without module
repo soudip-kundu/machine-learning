@@ -44,7 +44,7 @@ plt.show()
 labels=kmeans.predict(data)
 print(labels)
 dictionary={}
-for i in range(len(data)):
+for i in range(len(labels)):
     if labels[i] in dictionary:
         dictionary[labels[i]].append(data[i])
     else:
@@ -59,7 +59,12 @@ a=[float(new[0]),float(new[1])]
 dis={}
 for i in range(3):
     dis[i]=distance(centroid[i],a)
-print(dis)    
-find=min(dis)
+print("this is dis ",dis)    
+find=0
+for i in range(len(dis)):
+    if dis[find]>dis[i]:
+        find=i
+    else:
+        find=find  
 for i in range(len(dictionary[find])):
     print(location[dictionary[find][i]])
