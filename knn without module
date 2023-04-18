@@ -1,0 +1,65 @@
+def cen(a):
+    b=len(a)
+    su=0
+    c=[]
+    for x in range(0,2):
+     su=0
+     for i in range(0,b):
+        su=su+a[i][x]
+     c.append(su/b)  
+    return c
+def distance(a,b):
+    import math
+    c=math.sqrt((a[0]-b[0])**2+(a[1]-b[1])**2)
+    return c
+import matplotlib.pyplot as plt
+
+x = [26.18, 22.96, 25.38, 22.73,21.00, 22.74, 9.38 , 12.12, 11.79]
+y = [91.75, 88.57, 86.47, 71.64,73.30, 77.74, 76.57, 76.68, 77.80]
+
+plt.scatter(x, y)
+plt.show()
+from sklearn.cluster import KMeans
+
+data = list(zip(x, y))
+print(data)
+location={data[0]:"guwahati(assam)",data[1]:"haringhata(wb)",data[2]:"harnaut(bihar)",data[3]:"surendranath(gujarat)",data[4]:"ratnagiri(maharastra)",data[5]:"Hoshananad (MP) ",data[6]:"Thiruvalla (Kerala)",data[7]:"Mysore (Karnataka)",data[8]:"Mettur (TN)" }
+inertias = []
+for i in range(1,9):
+    kmeans = KMeans(n_clusters=i)
+    kmeans.fit(data)
+    inertias.append(kmeans.inertia_)
+
+plt.plot(range(1,9), inertias, marker='o')
+plt.title('Elbow method')
+plt.xlabel('Number of clusters')
+plt.ylabel('Inertia')
+plt.show()
+
+kmeans = KMeans(n_clusters=3)
+kmeans.fit(data)
+
+plt.scatter(x, y, c=kmeans.labels_)
+plt.show()
+labels=kmeans.predict(data)
+print(labels)
+dictionary={}
+for i in range(len(data)):
+    if labels[i] in dictionary:
+        dictionary[labels[i]].append(data[i])
+    else:
+        dictionary[labels[i]]=[data[i]]
+print(dictionary) 
+centroid={}
+for i in range(3):
+   centroid[i]=cen(dictionary[i])
+print(centroid)       
+new=input("enter the location (latitude,longitude): ").split(",")
+a=[float(new[0]),float(new[1])]
+dis={}
+for i in range(3):
+    dis[i]=distance(centroid[i],a)
+print(dis)    
+find=min(dis)
+for i in range(len(dictionary[find])):
+    print(location[dictionary[find][i]])
