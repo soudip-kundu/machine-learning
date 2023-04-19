@@ -1,0 +1,46 @@
+
+coll = ['Rasgulla is a sweet', 'Rasmalai is also a sweet',
+ 'Chocolate is also sweet but there are dark chocolates too', 'Pantua and sandesh are also sweets', 
+ 'I love mishti doi', 'Sweets are the heart of Kolkata', 
+ 'In the interiors you will find sweets like monohara and sarpuria', 'You will also find biriyani in Kolkata',
+ 'Aminia is known for biriyani', 'Arsalan is also known for biriyani', 
+ 'Wajid Ali Shah is credited for bringing biriyani to Kolkata',
+ 'Wajid Ali Shah was a Nawab', 'Satyajit Ray made a movie named Shatranj ke Khiladi on Wajid Ali Shah', 
+ 'Satyajit Ray was a great filmmaker']    
+def preprocess(s):
+ s = s.lower()
+ s = s.split(' ')
+ stop = ['also','we','our','ours','ourselves','you','your','yours',
+ 'yourself','yourselves','he','him','his','himself','she','her','hers','herself','it','its','itself',
+ 'they','them','their','theirs','themselves','what','which','who','whom','this','that','these','those',
+ 'am','is','are','was','were','be','been','being','have','has','had','having','do','does','did','doing',
+ 'a','an','the','and','but','if','or','because','as','until','while','of','at','by','for','with','about',
+ 'against','between','into','through','during','before','after','above','below','to','from','up','down',
+ 'in','out','on','off','over','under','again','further','then','once','here','there','when',
+ 'where','why','how','all', 'any','both','each','few','more','most','other','some','such',
+ 'no','nor','not','only','own','same','so','than',
+ 'too','very','s','t','can','will','just','don','should','now']
+ s_out = []
+ for w in s:
+  if w not in stop:
+   s_out.append(w)
+ return s_out
+newcoll=[]
+for i in range(len(coll)):
+ newcoll.append(preprocess(coll[i]))   
+badkey=[item for sublist in newcoll for item in sublist]
+key=list(set(badkey))
+dict={}
+a=[]
+for j in key:
+     a=[]   
+     if j not in dict:
+      for i in range(len(newcoll)):
+        if j in newcoll[i]:
+         for k in newcoll[i]:
+             if k!=j:
+              a.append(k)
+      dict[j]=a  
+print(dict["sweet"])  
+i=input("enter a word")
+for i in range()            
